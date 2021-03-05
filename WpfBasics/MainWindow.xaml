@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBasics"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="Wpf Basic" Height="800" Width="400">
+        
     <Border Padding="10">
         <StackPanel>
             <!--Buttons-->
@@ -15,14 +17,14 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Margin="0 0 10 0" Grid.Column="0" Content="Aply"/>
-                <Button Grid.Column="1" Content="Reset"/>
-                <Button Margin="10 0 0 0" Grid.Column="2" Content="Refresh"/>
+                <Button x:Name="ApplyButton" Click="ApplyButton_Click" Margin="0 0 10 0" Grid.Column="0" Content="Apply" />
+                <Button x:Name="ResetButton" Click="ResetButton_Click" Grid.Column="1" Content="Reset"/>
+                <Button x:Name="RefreshButton" Margin="10 0 0 0" Grid.Column="2" Content="Refresh"/>
             </Grid>
             <TextBlock Text="Pulse Properties" FontWeight="Bold" Margin="0 10"/>
             <!--Description-->
             <TextBlock Text="Description" Margin="10 0 0 0"/>
-            <TextBox Padding="2" Margin="10 0 10 0"/>
+            <TextBox x:Name="DescriptionText" Padding="2" Margin="10 0 10 0"/>
             <!--Status/Revision-->
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -60,33 +62,33 @@
                 </Grid.ColumnDefinitions>
                 <!--Column 0-->
                 <StackPanel Grid.Column="0" Margin="10 0 10 0">
-                    <CheckBox Content="Weld"/>
-                    <CheckBox Content="Assembly"/>
-                    <CheckBox Content="Plasma"/>
-                    <CheckBox Content="Laser"/>
-                    <CheckBox Content="Purchase"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="WeldCheckBox" Content="Weld"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="AssemblyCheckBox" Content="Assembly"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="PlasmaCheckBox" Content="Plasma"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="LaserCheckBox" Content="Laser"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="PurchaseCheckBox" Content="Purchase"/>
 
                 </StackPanel>
                 <!--Column 1-->
                 <StackPanel Grid.Column="1" Margin="0 0 10 10">
-                    <CheckBox Content="Lathe"/>
-                    <CheckBox Content="Drill"/>
-                    <CheckBox Content="Fold"/>
-                    <CheckBox Content="Roll"/>
-                    <CheckBox Content="Saw"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="LatherCheckBox" Content="Lathe"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="DrillCheckBox" Content="Drill"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="FoldCheckBox" Content="Fold"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="RollCheckBox" Content="Roll"/>
+                    <CheckBox Checked="CheckBox_Checked" x:Name="SawCheckBox" Content="Saw"/>
                 </StackPanel>
             </Grid>
             <!--Lenght-->
             <TextBlock Text="Lengh" Margin="10 0 0 0"/>
-            <TextBox Padding="2" Margin="10 0 10 0"/>
+            <TextBox x:Name="LenghText" Margin="10 0 10 0"/>
 
             <!--Mass-->
             <TextBlock Text="Mass" Margin="10 0 0 0"/>
-            <TextBox Margin="10 0 10 0" Padding="2" IsReadOnly="True" Background="#eee"/>
+            <TextBox x:Name="MassText" Margin="10 0 10 0" Padding="2" IsReadOnly="True" Background="#eee"/>
 
             <!--Finish-->
             <TextBlock Text="Finish" Margin="10 0 0 0"/>
-            <ComboBox SelectedIndex="0" Margin="10 0 10 10" >
+            <ComboBox x:Name="FinishDropDown" SelectionChanged="FinishDropDown_SelectionChanged" SelectedIndex="0" Margin="10 0 10 10" >
                 <ComboBoxItem>Painted</ComboBoxItem>
                 <ComboBoxItem>Not Painted</ComboBoxItem>
             </ComboBox>
@@ -98,16 +100,16 @@
             </ComboBox>
 
             <!--Suplier Nane-->
-            <TextBlock Text="Suplier Nane" Margin="10 0 0 0"/>
-            <TextBox Margin="10 0 10 10" />
+            <TextBlock Text="Suplier Name" Margin="10 0 0 0"/>
+            <TextBox TextChanged="SuplierText_TextChanged" x:Name="SuplierText" Margin="10 0 10 10" />
             <!--Suplier Code-->
             <TextBlock Text="Suplier Code" Margin="10 0 0 0"/>
             <TextBox Margin="10 0 10 10" />
             <!--Additional Info-->
             <TextBlock Text="Additional Info" FontWeight="Bold" Margin="10 0"/>
             <!--Description-->
-            <TextBlock Text="Description" Margin="10 10"/>
-            <TextBox Margin="10 0 10 0" Padding="2"/>
+            <TextBlock Text="Note" Margin="10 10"/>
+            <TextBox x:Name="NoteText" Margin="10 0 10 0" Padding="2"/>
 
         </StackPanel>
     </Border>

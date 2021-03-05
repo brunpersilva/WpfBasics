@@ -6,4 +6,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\drive.png" />
+    <None Remove="Images\file.png" />
+    <None Remove="Images\folder-open.png" />
+    <None Remove="Images\folderclosed.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\drive.png" />
+    <Resource Include="Images\file.png" />
+    <Resource Include="Images\folder-open.png" />
+    <Resource Include="Images\folderclosed.png" />
+  </ItemGroup>
+
 </Project>
