@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WpfBasics
+﻿namespace WpfBasics
 {
     /// <summary>
     /// Information about a directory item such as a drive, folder or folder.

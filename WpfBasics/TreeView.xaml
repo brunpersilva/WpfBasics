@@ -8,6 +8,7 @@
         Title="TreeView" Height="350" Width="525">
 
     <Grid>
+
         <TreeView x:Name="FolderView" ItemsSource="{Binding Items}">
 
             <TreeView.ItemContainerStyle>
@@ -29,5 +30,6 @@
 
         </TreeView>
     </Grid>
+
 
 </Window>
