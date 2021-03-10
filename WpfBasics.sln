@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfBasics", "WpfBasics\WpfBasics.csproj", "{E90BCC9A-8C9A-46C7-B146-78A4835C77DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfBasics", "WpfBasics\WpfBasics.csproj", "{E90BCC9A-8C9A-46C7-B146-78A4835C77DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fasetto Word", "Fasetto Word\Fasetto Word.csproj", "{3CB4E44A-74AD-449A-B4E8-9DD6BF6F5754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E90BCC9A-8C9A-46C7-B146-78A4835C77DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E90BCC9A-8C9A-46C7-B146-78A4835C77DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E90BCC9A-8C9A-46C7-B146-78A4835C77DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CB4E44A-74AD-449A-B4E8-9DD6BF6F5754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CB4E44A-74AD-449A-B4E8-9DD6BF6F5754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CB4E44A-74AD-449A-B4E8-9DD6BF6F5754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CB4E44A-74AD-449A-B4E8-9DD6BF6F5754}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
