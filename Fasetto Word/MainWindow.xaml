@@ -6,10 +6,17 @@
         xmlns:local="clr-namespace:Fasetto_Word"
         mc:Ignorable="d"
         WindowStyle="None"
+        x:Name="AppWindow"
         AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"        
         Icon="Images/Logo/logo-small.png"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Welcome" Height="600" Width="900">
 
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}"/>
+    </WindowChrome.WindowChrome>
+    <Grid>        
     </Grid>
+    
+    
 </Window>
