@@ -26,6 +26,15 @@ namespace Fasetto_Word
 
         #region Public properties
         /// <summary>
+        /// Smallest width the window can go
+        /// </summary>
+        public double WindowMinimumWidth { get; set; } = 400;
+        /// <summary>
+        /// smallest height the window can go
+        /// </summary>
+        public double WindowMinimumHeight { get; set; } = 400;
+
+        /// <summary>
         /// The size of the resize border around the window
         /// </summary>
         public int ResizeBorder { get; set; } = 6;
@@ -35,6 +44,12 @@ namespace Fasetto_Word
         /// window taking into account the outer margin
         /// </summary>
         public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
+
+        /// <summary>
+        ///The padding of the inner content of the main window
+        /// </summary>
+        public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder); } }
+
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
@@ -129,6 +144,9 @@ namespace Fasetto_Word
             MaximizeComand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => _window.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
+
+            //Fix window resize issue
+            var resizer = new WindowResizer(_window);
 
 
         }
