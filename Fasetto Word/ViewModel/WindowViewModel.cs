@@ -1,38 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Fasetto_Word
 {
     /// <summary>
-    /// The view model for the custom flat window
+    /// The View Model for the custom flat window
     /// </summary>
     public class WindowViewModel : BaseViewModel
     {
-        #region Private member
-        private readonly Window _window;
+        #region Private Member
+
         /// <summary>
-        /// The margin around the window to allow for drop down shadow
+        /// The window this view model controls
+        /// </summary>
+        private Window _window;
+
+        /// <summary>
+        /// The margin around the window to allow for a drop shadow
         /// </summary>
         private int _outerMarginSize = 10;
+
         /// <summary>
         /// The radius of the edges of the window
         /// </summary>
         private int _windowRadius = 10;
+
+        /// <summary>
+        /// The last known dock position
+        /// </summary>
+        private WindowDockPosition _dockPosition = WindowDockPosition.Undocked;
+
         #endregion
 
-        #region Public properties
+        #region Public Properties
+
         /// <summary>
-        /// Smallest width the window can go
+        /// The smallest width the window can go to
         /// </summary>
         public double WindowMinimumWidth { get; set; } = 400;
+
         /// <summary>
-        /// smallest height the window can go
+        /// The smallest height the window can go to
         /// </summary>
         public double WindowMinimumHeight { get; set; } = 400;
+
+        /// <summary>
+        /// True if the window should be borderless because it is docked or maximized
+        /// </summary>
+        public bool Borderless { get { return (_window.WindowState == WindowState.Maximized || _dockPosition != WindowDockPosition.Undocked); } }
 
         /// <summary>
         /// The size of the resize border around the window
@@ -40,16 +57,14 @@ namespace Fasetto_Word
         public int ResizeBorder { get; set; } = 6;
 
         /// <summary>
-        /// The size of the resize border around the 
-        /// window taking into account the outer margin
+        /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
         public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
 
         /// <summary>
-        ///The padding of the inner content of the main window
+        /// The padding of the inner content of the main window
         /// </summary>
         public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder); } }
-
 
         /// <summary>
         /// The margin around the window to allow for a drop shadow
@@ -58,7 +73,8 @@ namespace Fasetto_Word
         {
             get
             {
-                return _window.WindowState == WindowState.Maximized ? 0 : _outerMarginSize;
+                // If it is maximized or docked, no border
+                return Borderless ? 0 : _outerMarginSize;
             }
             set
             {
@@ -78,7 +94,8 @@ namespace Fasetto_Word
         {
             get
             {
-                return _window.WindowState == WindowState.Maximized ? 0 : _windowRadius;
+                // If it is maximized or docked, no border
+                return Borderless ? 0 : _windowRadius;
             }
             set
             {
@@ -92,30 +109,33 @@ namespace Fasetto_Word
         public CornerRadius WindowCornerRadius { get { return new CornerRadius(WindowRadius); } }
 
         /// <summary>
-        /// The height of the title bar/caption of the window
+        /// The height of the title bar / caption of the window
         /// </summary>
         public int TitleHeight { get; set; } = 42;
-
-        public GridLength TitleHeightGridLenght { get { return new GridLength(TitleHeight + ResizeBorder); } }
+        /// <summary>
+        /// The height of the title bar / caption of the window
+        /// </summary>
+        public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
         #endregion
 
+        #region Commands
 
-        #region Commands 
         /// <summary>
         /// The command to minimize the window
         /// </summary>
-        public ICommand MinimizeComand { get; set; }
+        public ICommand MinimizeCommand { get; set; }
 
         /// <summary>
         /// The command to maximize the window
         /// </summary>
-        public ICommand MaximizeComand { get; set; }
+        public ICommand MaximizeCommand { get; set; }
 
         /// <summary>
         /// The command to close the window
         /// </summary>
         public ICommand CloseCommand { get; set; }
+
         /// <summary>
         /// The command to show the system menu of the window
         /// </summary>
@@ -124,36 +144,73 @@ namespace Fasetto_Word
         #endregion
 
         #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public WindowViewModel(Window window)
         {
             _window = window;
 
-            //Listen out for the window resizing
+            // Listen out for the window resizing
             _window.StateChanged += (sender, e) =>
             {
-                //Fire event for all properties that are affected by resize
-                OnpropertyChanged(nameof(ResizeBorderThickness));
-                OnpropertyChanged(nameof(OuterMarginSize));
-                OnpropertyChanged(nameof(OuterMarginSizeThickness));
-                OnpropertyChanged(nameof(WindowRadius));
-                OnpropertyChanged(nameof(WindowCornerRadius));
+                // Fire off events for all properties that are affected by a resize
+                WindowResized();
             };
 
-            //Create commands
-            MinimizeComand = new RelayCommand(() => _window.WindowState = WindowState.Minimized);
-            MaximizeComand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized);
+            // Create commands
+            MinimizeCommand = new RelayCommand(() => _window.WindowState = WindowState.Minimized);
+            MaximizeCommand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => _window.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
 
-            //Fix window resize issue
+            // Fix window resize issue
             var resizer = new WindowResizer(_window);
 
+            // Listen out for dock changes
+            resizer.WindowDockChanged += (dock) =>
+            {
+                // Store last position
+                _dockPosition = dock;
 
+                // Fire off resize events
+                WindowResized();
+            };
         }
+
         #endregion
 
-        #region Private helpers
-        Point GetMousePosition() => _window.PointToScreen(Mouse.GetPosition(_window));
+        #region Private Helpers
+
+        /// <summary>
+        /// Gets the current mouse position on the screen
+        /// </summary>
+        /// <returns></returns>
+        private Point GetMousePosition()
+        {
+            // Position of the mouse relative to the window
+            var position = Mouse.GetPosition(_window);
+
+            // Add the window position so its a "ToScreen"
+            return new Point(position.X + _window.Left, position.Y + _window.Top);
+        }
+
+        /// <summary>
+        /// If the window resizes to a special position (docked or maximized)
+        /// this will update all required property change events to set the borders and radius values
+        /// </summary>
+        private void WindowResized()
+        {
+            // Fire off events for all properties that are affected by a resize
+            OnpropertyChanged(nameof(Borderless));
+            OnpropertyChanged(nameof(ResizeBorderThickness));
+            OnpropertyChanged(nameof(OuterMarginSize));
+            OnpropertyChanged(nameof(OuterMarginSizeThickness));
+            OnpropertyChanged(nameof(WindowRadius));
+            OnpropertyChanged(nameof(WindowCornerRadius));
+        }
+
 
         #endregion
     }
