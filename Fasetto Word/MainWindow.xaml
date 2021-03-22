@@ -69,9 +69,16 @@
                                         </Button>
                                         
                                         <!--Title-->
-                                        <Viewbox  Grid.Column="1" Margin="0" Stretch="Uniform">
-                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, 
-                                                Path=Title, FallbackValue='Welcome, friend'}"/>
+                                        <Viewbox  Grid.Column="0" Grid.ColumnSpan="3" Margin="0" Stretch="Uniform">
+                                            <StackPanel>
+                                                <TextBlock FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegulag}" Margin="0,0,0,-5">
+                                                    <Run Text="W" Foreground="{StaticResource WordOrangeBrush}" />
+                                                    <Run Text="O" Foreground="{StaticResource WordBlueBrush}" />
+                                                    <Run Text="R" Foreground="{StaticResource WordRedBrush}" />
+                                                    <Run Text="D" Foreground="{StaticResource WordGreenBrush}" />
+                                                </TextBlock>
+                                                <TextBlock Text="by fasetto" Foreground="{StaticResource ForeGroundDarkBrush}" TextAlignment="Center" />
+                                            </StackPanel>
                                         </Viewbox>
                                         
                                         <!--Window buttons-->
