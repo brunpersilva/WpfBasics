@@ -71,7 +71,7 @@
                                         <!--Title-->
                                         <Viewbox  Grid.Column="0" Grid.ColumnSpan="3" Margin="0" Stretch="Uniform">
                                             <StackPanel>
-                                                <TextBlock FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegulag}" Margin="0,0,0,-5">
+                                                <TextBlock FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegular}" Margin="0,0,0,-5">
                                                     <Run Text="W" Foreground="{StaticResource WordOrangeBrush}" />
                                                     <Run Text="O" Foreground="{StaticResource WordBlueBrush}" />
                                                     <Run Text="R" Foreground="{StaticResource WordRedBrush}" />
@@ -113,6 +113,7 @@
     </WindowChrome.WindowChrome>
     <Grid Background="{StaticResource ForeGroundLightBrush}">
         <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+        
     </Grid>
     
     
