@@ -1,4 +1,4 @@
-﻿namespace Fasetto_World
+﻿namespace Fasetto_Word
 
     /// <summary>
     /// Styles of page animations for appearing/disappearing
